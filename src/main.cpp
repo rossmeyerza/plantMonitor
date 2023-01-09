@@ -1,7 +1,16 @@
 // Sensor pins
+#include <Arduino.h>
+
 #define sensorPower 4
 #define sensorPin A0
 
+int readSensor() {
+	digitalWrite(sensorPower, HIGH);	// Turn the sensor ON
+	delay(10);							// Allow power to settle
+	int val = analogRead(sensorPin);	// Read the analog value form sensor
+	digitalWrite(sensorPower, LOW);		// Turn the sensor OFF
+	return val;							// Return analog moisture value
+}
 
 void setup() {
 	pinMode(sensorPower, OUTPUT);
@@ -19,14 +28,7 @@ void loop() {
 	Serial.println(readSensor());
   digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
 	
-	delay(1000);
+	delay(2*60*1000);
 }
 
 //  This function returns the analog soil moisture measurement
-int readSensor() {
-	digitalWrite(sensorPower, HIGH);	// Turn the sensor ON
-	delay(10);							// Allow power to settle
-	int val = analogRead(sensorPin);	// Read the analog value form sensor
-	digitalWrite(sensorPower, LOW);		// Turn the sensor OFF
-	return val;							// Return analog moisture value
-}
